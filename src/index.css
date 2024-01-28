@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.slider::-webkit-scrollbar{
+    display: none;
+}
+.latestnews::-webkit-scrollbar{
+    display: none;
+}
+.latestpart::-webkit-scrollbar{
+    display: none;
+}
+.slider{
+    scroll-behavior: smooth;
+}
