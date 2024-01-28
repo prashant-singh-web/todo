@@ -1,6 +1,6 @@
 
 import './App.css';
-import { BrowserRouter,Routes,Route } from 'react-router-dom';
+import { HashRouter ,Routes,Route } from 'react-router-dom';
 import Home from './Home';
 import Service from './Service';
 import Navbar from './component/Navbar';
@@ -16,7 +16,7 @@ import Filterproduct from './Filterproduct';
 function App() {
   return (
     <div className="w-full ">
-      <BrowserRouter>
+      <HashRouter >
       <Navbar/>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -30,7 +30,7 @@ function App() {
         <Route path='*' element={<Errorpage/>}/>
       </Routes>
       <Footer/>
-      </BrowserRouter>
+      </HashRouter >
    
     </div>
   );
