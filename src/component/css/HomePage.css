@@ -1,0 +1,7 @@
+.main{
+    @apply w-full grid grid-cols-1 lg:grid-cols-2 p-10;
+}
+.form-input{
+    @apply w-full border outline-none p-2 text-sm  text-black/80 placeholder:text-black/80 font-normal font-roboto rounded-sm focus-within:border-black/70;
+}
+
