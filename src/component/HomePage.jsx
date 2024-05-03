@@ -20,7 +20,7 @@ function HomePage() {
   }, [user]);
 
   return (
-    <div className="w-full h- overflow-hidden bg-green-500 ">
+    <div className="w-full h- overflow-hidden bg-white ">
       <div className="main mx-auto my-auto w-full 2xl:max-h-[1024px] xl:max-w-full 2xl:max-w-[1600px] relative z-30">
       <AddTodoPage />
       <TodoListPage />
