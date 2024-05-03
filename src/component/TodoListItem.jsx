@@ -18,7 +18,8 @@ function TodoListItem() {
     } else {
       navigate("/login");
     }
-  }, [getNotes, navigate, userID]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ userID]);
 
   // update each note based on their note id under user to set filter value
   const updateNoteToggle = async (noteId, field) => {
