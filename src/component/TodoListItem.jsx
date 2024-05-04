@@ -1,9 +1,10 @@
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, runTransaction } from "firebase/firestore";
 import React, { useEffect } from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { db } from "../config/Firebase";
 import { useGlobalContext } from "../config/ContextApi";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 // import EachNoteList from './EachNoteList';
 
 function TodoListItem() {
@@ -23,17 +24,27 @@ function TodoListItem() {
 
   // update each note based on their note id under user to set filter value
   const updateNoteToggle = async (noteId, field) => {
-    // getting note doc baased on thair id
+    // getting note doc based on their id
     const noteRef = doc(db, "users", userID, "notes", noteId);
-    const noteSnap = await getDoc(noteRef);
-    const noteData = noteSnap.data();
-    // toggle todo field like completed favorite or deleted
-    await updateDoc(noteRef, { [field]: !noteData[field] });
+  
+    await runTransaction(db, async (transaction) => {
+      const noteSnap = await transaction.get(noteRef);
+      if (!noteSnap.exists()) {
+        toast.error("doc not found")
+      }
+  
+      // toggle todo field like completed, favorite or deleted
+      const newValue = !noteSnap.data()[field];
+      transaction.update(noteRef, { [field]: newValue });
+    });
+  
     getNotes(userID); // Refresh the notes list
   };
+  
 
   return (
     <div className="w-full flex flex-col ">
+      <Toaster position="top-center" reverseOrder={false} />
       <h2 className="w-full my-5 text-center text-xl font-bold text-black/80">
         {notesList?.length >= 1
           ? `Todos(${notesList.length})`

@@ -10,20 +10,31 @@ function AddTodoPage() {
   const [noteTitle, setNoteTitle] = useState("");
   const [noteDescription, setNoteDescription] = useState("");
   // getting state from global state object
-  const { userID, toggleAddNoteForm, setToggleAddNoteForm, getNotes } =
+  const { userID, toggleAddNoteForm, setToggleAddNoteForm } =
     useGlobalContext();
 
-  const handleAddNote = (event) => {
-    event.preventDefault(); // Prevent the page from refreshing
-    // make sure the input field is not empty
-    if (userID != null && noteTitle !== "" && noteDescription !== "") {
+    const handleAddNote = (event) => {
+      event.preventDefault(); // Prevent the page from refreshing
+    
+      // make sure the input field is not empty
+      if (userID == null) {
+        toast.error("Please log in to add a note");
+        return;
+      }
+      if (noteTitle === "") {
+        toast.error("Please fill in the note title");
+        return;
+      }
+      if (noteDescription === "") {
+        toast.error("Please fill in the note description");
+        return;
+      }
+    
       addNote(userID, noteTitle, noteDescription);
       setNoteDescription("");
       setNoteTitle("");
-    } else {
-      toast.error("User ID, title and description must be filled");
-    }
-  };
+    };
+    
   // add note under user
   const addNote = async (userId, noteTitle, noteDescription) => {
     try {
@@ -31,8 +42,7 @@ function AddTodoPage() {
         title: noteTitle,
         description: noteDescription,
       });
-      //  after adding note, update noteslist
-      getNotes(userId);
+     
       toast.success("Note added successfully");
     } catch (e) {
       console.error("Error adding note: ", e);

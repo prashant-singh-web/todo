@@ -8,10 +8,11 @@ import { useGlobalContext } from "../config/ContextApi";
 import AddTodoPage from "./AddTodoPage";
 import { TiPlus } from "react-icons/ti";
 
+
 function HomePage() {
   const [user] = useAuthState(auth);
 
-  const { setUserID,setToggleAddNoteForm } = useGlobalContext();
+  const { setUserID,setToggleAddNoteForm,toggleAddNoteForm } = useGlobalContext();
   useEffect(() => {
     if (user != null) {
       setUserID(user.uid);
@@ -26,7 +27,7 @@ function HomePage() {
       <TodoListPage />
       
     </div>
-    <button onClick={()=>setToggleAddNoteForm(true)} className="absolute  z-20  px-6 sm:px-10 sm:py-5 hover:bg-gray-50 duration-200 ease-linear right-6 bottom-8 sm:bottom-12 sm:right-9 flex lg:hidden bg-white rounded-md hover:scale-95 py-4 shadow text-sm font-semibold text-black/80 ">
+    <button  onClick={()=>setToggleAddNoteForm(true)} className={`absolute ${toggleAddNoteForm ? "hidden":""}  z-30  px-6 sm:px-10 sm:py-5 hover:bg-gray-50 duration-200 ease-linear right-6 bottom-8 sm:bottom-12 sm:right-9 flex lg:hidden bg-white rounded-md hover:scale-95 py-4 shadow text-sm font-semibold text-black/80`}>
     Add <TiPlus className='my-auto ml-2'/>
     </button>
     </div>

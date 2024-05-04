@@ -14,15 +14,30 @@ const GlobalProvider = ({children}) => {
   const [notesList, setNotesList] = useState(null)
 
   // getting notes based on userID
+  let notesCache = {};
+
   const getNotes = async (userId, filter = 'all') => {
+    if (notesCache[userId] && notesCache[userId][filter]) {
+      setNotesList(notesCache[userId][filter]);
+      return;
+    }
+  
     let notesCollection = collection(db, "users", userId, "notes");
     if (filter !== 'all') {
       notesCollection = query(notesCollection, where(filter, '==', true));
     }
+  
     const noteSnapshot = await getDocs(notesCollection);
     const noteList = noteSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  
+    if (!notesCache[userId]) {
+      notesCache[userId] = {};
+    }
+    notesCache[userId][filter] = noteList;
+  
     setNotesList(noteList);
   };
+  
 
   return (
     // make a globle context
