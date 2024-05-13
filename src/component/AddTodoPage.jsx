@@ -13,28 +13,28 @@ function AddTodoPage() {
   const { userID, toggleAddNoteForm, setToggleAddNoteForm } =
     useGlobalContext();
 
-    const handleAddNote = (event) => {
-      event.preventDefault(); // Prevent the page from refreshing
-    
-      // make sure the input field is not empty
-      if (userID == null) {
-        toast.error("Please log in to add a note");
-        return;
-      }
-      if (noteTitle === "") {
-        toast.error("Please fill in the note title");
-        return;
-      }
-      if (noteDescription === "") {
-        toast.error("Please fill in the note description");
-        return;
-      }
-    
-      addNote(userID, noteTitle, noteDescription);
-      setNoteDescription("");
-      setNoteTitle("");
-    };
-    
+  const handleAddNote = (event) => {
+    event.preventDefault(); // Prevent the page from refreshing
+
+    // make sure the input field is not empty
+    if (userID == null) {
+      toast.error("Please log in to add a note");
+      return;
+    }
+    if (noteTitle === "") {
+      toast.error("Please fill in the note title");
+      return;
+    }
+    if (noteDescription === "") {
+      toast.error("Please fill in the note description");
+      return;
+    }
+
+    addNote(userID, noteTitle, noteDescription);
+    setNoteDescription("");
+    setNoteTitle("");
+  };
+
   // add note under user
   const addNote = async (userId, noteTitle, noteDescription) => {
     try {
@@ -42,7 +42,7 @@ function AddTodoPage() {
         title: noteTitle,
         description: noteDescription,
       });
-     
+
       toast.success("Note added successfully");
     } catch (e) {
       console.error("Error adding note: ", e);
@@ -53,7 +53,9 @@ function AddTodoPage() {
   return (
     <div
       className={`absolute  z-50 lg:static   ${
-        toggleAddNoteForm ? "inset-0 h-[100vh] p-4 sm:p-10" : "h-0 overflow-hidden  lg:h-fit"
+        toggleAddNoteForm
+          ? "inset-0 h-[100vh]  p-4 sm:p-10"
+          : "h-0 overflow-hidden  lg:h-fit"
       } transition-all ease-linear duration-300 bg-white z-40 lg:flex flex-col lg:p-8  border-r-2`}
     >
       <Toaster position="top-center" reverseOrder={false} />
